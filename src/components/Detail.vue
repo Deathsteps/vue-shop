@@ -41,10 +41,13 @@
   		<img class="detail-img" v-for="image in detailImages" :src="image.imageUrl" alt="" />
   	</div>
 
+    <fixed-footer back="true"></fixed-footer>
 	</div>
 </template>
 
 <script>
+import FixedFooter from './commons/FixedFooter'
+
 export default {
   name: 'detail',
   data () {
@@ -73,6 +76,9 @@ export default {
         { imageUrl: 'http://www.aomaicdn.com/images/upload/image/20150709/20150709120615_50995.jpg' }
       ]
     }
+  },
+  components: {
+    FixedFooter
   }
 }
 </script>
@@ -135,7 +141,7 @@ export default {
   text-align: right;
 }
 .detail-like {
-  font-size: 1rem !important;
+  font-size: 1rem;
   margin-right: .3rem;
   color: #FE6775;
 }

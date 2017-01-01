@@ -36,21 +36,25 @@
       </div>
     </div>
 
-    <div class="tabs">
-      <a class="tab">
-        <span class="iconfont">&#xe619;</span>
-        <div>首页</div>
-      </a>
-      <a class="tab">
-        <span class="iconfont">&#xe620;</span>
-        <div>我的</div>
-      </a>
-    </div>
+    <fixed-footer>
+      <div class="tabs">
+        <a class="tab">
+          <span class="iconfont">&#xe619;</span>
+          <div>首页</div>
+        </a>
+        <a class="tab">
+          <span class="iconfont">&#xe620;</span>
+          <div>我的</div>
+        </a>
+      </div>
+    </fixed-footer>
 
   </div>
 </template>
 
 <script>
+import FixedFooter from './commons/FixedFooter'
+
 export default {
   name: 'home',
   data () {
@@ -88,6 +92,9 @@ export default {
     gotoDetail (id) {
       this.$router.push('detail')
     }
+  },
+  components: {
+    FixedFooter
   }
 }
 </script>
@@ -102,7 +109,7 @@ export default {
     line-height: 2rem;
     width: 93%;
     margin: 0 auto;
-    border-radius: 0.4rem !important;
+    border-radius: 0.4rem;
     border: none;
     background-color: white;
     padding: 0 .5rem;
@@ -141,7 +148,7 @@ export default {
     text-align: center;
   }
   .tab span {
-    font-size: 2.3rem !important;
+    font-size: 2.3rem;
     display: block;
   }
   .tab div {
@@ -188,5 +195,20 @@ export default {
     padding-top: 1.5625rem;
     color: #fd8e56;
     font-family: 'DIN Alternate';
+  }
+
+  footer .tabs {
+    height: 100%;
+    margin-top: 0;
+  }
+  footer .tab {
+    padding: 0.45rem;
+  }
+  footer .tab span {
+    font-size: 1.5rem;
+  }
+  footer .tab div {
+    margin: 0;
+    font-size: 0.6875rem;
   }
 </style>
