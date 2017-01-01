@@ -23,7 +23,10 @@
       </a>
     </div>
 
-    <div class="product-list">
+    <div class="loading" v-if="fetching">
+      Loading...
+    </div>
+    <div class="product-list" v-if="!fetching && products">
       <div v-for="product in products" class="product-wrapper clearfix"
         @click="gotoDetail('product.id')">
     		<div class="product-img">
@@ -53,45 +56,22 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import FixedFooter from './commons/FixedFooter'
 
 export default {
   name: 'home',
   data () {
-    return {
-      products: [
-        {
-          title: 'App Product',
-          price: 500,
-          picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'
-        },
-        {
-          title: 'App Product 1',
-          price: 300,
-          picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'
-        },
-        {
-          title: 'App Product 2',
-          price: 500,
-          picUrl: 'http://www.aomaicdn.com/attas/2016/11/20161118100820_582e6294c02d8.jpg'
-        },
-        {
-          title: 'App Product 3',
-          price: 800,
-          picUrl: 'http://www.aomaicdn.com/attas/2016/05/947_G_1463121881855.jpg'
-        },
-        {
-          title: 'App Product 4',
-          price: 100,
-          picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'
-        }
-      ]
-    }
+    return this.$store.state.home
+  },
+  created () {
+    this.fetchHomeProducts()
   },
   methods: {
     gotoDetail (id) {
       this.$router.push('detail')
-    }
+    },
+    ...mapActions(['fetchHomeProducts'])
   },
   components: {
     FixedFooter
@@ -129,7 +109,6 @@ export default {
     padding-right: 24px;
     background-color: transparent;
   }
-
 
   .tabs {
     display: flex;

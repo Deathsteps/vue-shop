@@ -17,6 +17,10 @@ var port = process.env.PORT || config.dev.port
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+
+// dev test data mock service
+app.use('/data', require('./devMockDataService.js'));
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {

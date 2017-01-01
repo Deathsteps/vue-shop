@@ -2,83 +2,82 @@
   <div class="view">
 
     <div class="detail-slides">
-  		<div class="detail-slides-wrapper" :style="sliderWrapperWidthStyle">
+  		<div class="detail-slides-wrapper"
+        :style="'width: ' + sliderWrapperWidth + 'px'"
+        v-if="detail.slideImages">
   			<div
           class="detail-banner"
-          v-for="image in slideImages"
-          :style="screenWidthStyle">
+          v-for="image in detail.slideImages"
+          :style="'width: ' + screenWidth + 'px'">
   			  <img :src="image.imageUrl" />
   			</div>
   		</div>
-  		<div class="detail-index">1/{{ slideImageCount }}</div>
+  		<div class="detail-index" v-if="detail.slideImages">
+        1/{{ detail.slideImages.length }}
+      </div>
   	</div>
 
   	<div class="detail-text-wrapper">
-  		<div class="detail-title">{{title}}</div>
-  		<div class="detail-price">¥{{price}}</div>
+  		<div class="detail-title">{{detail.title}}</div>
+  		<div class="detail-price">¥{{detail.price}}</div>
   		<div class="flex-row">
-  			<div class="detail-text">剩余 {{stock}} 件</div>
+  			<div class="detail-text">剩余 {{detail.stock}} 件</div>
   			<div class="detail-text">
   				<span class="detail-like iconfont">&#xe622;</span>
-          喜欢 {{collectCount}}
+          喜欢 {{detail.collectCount}}
   			</div>
   		</div>
   	</div>
-  	<a class="detail-logo-wrapper clearfix">
-  		<img class="detail-logo" :src="brand.logo" alt=""/>
-  		<div class="detail-logo-name">{{brand.brandName}}</div>
+  	<a class="detail-logo-wrapper clearfix" v-if="detail.brand">
+  		<img class="detail-logo" :src="detail.brand.logo" alt=""/>
+  		<div class="detail-logo-name">{{detail.brand.brandName}}</div>
   		<div class="detail-logo-arrow">&gt;</div>
   	</a>
 
   	<div class="detail-sub-title"><span class="iconfont">&#xe616;</span>商品详情</div>
   	<div class="app-bars">
-  		<div class="detail-detail" v-for="item in details">
+  		<div class="detail-detail" v-for="item in detail.details">
   			<div>{{item.name}}</div>
   			<div>{{item.value}}</div>
   		</div>
   	</div>
   	<div class="detail-detail-imgs">
-  		<img class="detail-img" v-for="image in detailImages" :src="image.imageUrl" alt="" />
+  		<img class="detail-img"
+        v-for="image in detail.detailImages"
+        :src="image.imageUrl" alt="" />
   	</div>
 
-    <fixed-footer back="true"></fixed-footer>
+    <fixed-footer :back="true"></fixed-footer>
 	</div>
 </template>
 
 <script>
 import FixedFooter from './commons/FixedFooter'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'detail',
   data () {
-    return {
-      slideImages: [
-        {imageUrl: 'http://www.aomaicdn.com/attas/orgimg/2015/07/157_P_1438249404266.jpg'},
-        {imageUrl: 'http://www.aomaicdn.com/attas/orgimg/2015/07/157_P_1438249404546.jpg'}
-      ],
-      slideImageCount: 2,
-      sliderWrapperWidthStyle: 'width: ' + (document.documentElement.offsetWidth * 2) + 'px',
-      screenWidthStyle: 'width: ' + document.documentElement.offsetWidth + 'px',
-      title: 'Blackmores 芹菜籽西芹籽 痛风灵解除尿毒 50粒',
-      price: 300,
-      stock: 200,
-      isCollect: true,
-      collectCount: 20,
-      brand: { logo: 'abs', brandName: 'Blackmores 百丽康美' },
-      details: [
-        { name: 'sdfsdfax', value: 'sdfsfa123123' },
-        { name: 'abababqw', value: 'sfa158839sdf3' },
-        { name: 'lklxklxkx', value: 'olkxckxfa123123' }
-      ],
-      detailImages: [
-        { imageUrl: 'http://www.aomaicdn.com/images/upload/image/20150709/20150709120557_77766.jpg' },
-        { imageUrl: 'http://www.aomaicdn.com/images/upload/image/20150709/20150709120557_60289.jpg' },
-        { imageUrl: 'http://www.aomaicdn.com/images/upload/image/20150709/20150709120615_50995.jpg' }
-      ]
+    return this.$store.state.detail
+  },
+  computed: {
+    sliderWrapperWidth () {
+      return (this.detail.slideImages
+        ? document.documentElement.offsetWidth * this.detail.slideImages.length
+        : document.documentElement.offsetWidth)
+    },
+    screenWidth () {
+      return document.documentElement.offsetWidth
     }
   },
   components: {
     FixedFooter
+  },
+  created () {
+    this.fetchProductDetail()
+  },
+  methods: {
+    ...mapActions(['fetchProductDetail'])
   }
 }
 </script>
