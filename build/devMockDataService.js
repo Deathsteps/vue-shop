@@ -33,7 +33,7 @@ router.post('/home', function (req, res, next) {
         }
       ]
     });
-  }, 200);
+  }, 500);
 });
 router.post('/detail', function (req, res, next) {
   setTimeout(function () {
@@ -59,7 +59,14 @@ router.post('/detail', function (req, res, next) {
         { imageUrl: 'http://www.aomaicdn.com/images/upload/image/20150709/20150709120615_50995.jpg' }
       ]
     })
-  }, 200);
+  }, 500);
+})
+router.post('/login', function (req, res, next) {
+  setTimeout(() => {
+    res.json({
+      token: 'sds12-21s2d-w21as-i23jd'
+    })
+  }, 500)
 })
 
 module.exports = router;

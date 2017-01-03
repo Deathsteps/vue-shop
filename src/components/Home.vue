@@ -1,68 +1,103 @@
 <template>
   <div class="view">
 
-    <div class="searcher">
-      <label class="searcher-input">
-        <span class="iconfont">&#xe62b;</span>
-        <input type="text" placeholder="请输入商品名称" />
-      </label>
+    <div v-if="display === 'home'">
+      <searcher></searcher>
+
+      <tabs :data="homeTabs"></tabs>
+
+      <div class="loading" v-if="fetching">
+        Loading...
+      </div>
+      <div class="product-list" v-if="!fetching && products">
+        <div v-for="product in products" class="product-wrapper clearfix"
+          @click="gotoDetail('product.id')">
+      		<div class="product-img">
+      		  <img :src="product.picUrl"/>
+      		</div>
+      		<div class="product-item">
+      			<div class="product-title">{{ product.title }}</div>
+      			<div class="product-price">¥{{ product.price }}</div>
+      		</div>
+        </div>
+      </div>
     </div>
 
-    <div class="tabs">
-      <a class="tab">
-        <span class="iconfont">&#xe612;</span>
-        <div>品牌</div>
-      </a>
-      <a class="tab">
-        <span class="iconfont">&#xe60b;</span>
-        <div>分类</div>
-      </a>
-      <a class="tab">
-        <span class="iconfont">&#xe60a;</span>
-        <div>发现</div>
-      </a>
-    </div>
+    <div v-if="display === 'user'">
+      <div class="userCenter-header">
+        <div class="userCenter-phone">绑定手机号</div>
+        <div class="userCenter-avatar-wrapper">
+          <img class="userCenter-avatar" src="static/images/avatar.png" alt="" />
+          <div class="ng-binding">登录</div>
+        </div>
+      </div>
 
-    <div class="loading" v-if="fetching">
-      Loading...
-    </div>
-    <div class="product-list" v-if="!fetching && products">
-      <div v-for="product in products" class="product-wrapper clearfix"
-        @click="gotoDetail('product.id')">
-    		<div class="product-img">
-    		  <img :src="product.picUrl"/>
-    		</div>
-    		<div class="product-item">
-    			<div class="product-title">{{ product.title }}</div>
-    			<div class="product-price">¥{{ product.price }}</div>
-    		</div>
+      <div class="userCenter-tabs">
+        <tabs :data="userCenterTabs"></tabs>
+      </div>
+
+      <div class="app-bars">
+        <div class="app-bar">
+          <span class="iconfont">&#xe613;</span>
+          <span class="text">全部订单</span>
+          <span class="arrow"></span>
+        </div>
+        <router-link tag="div" to="address" class="app-bar">
+          <span class="iconfont">&#xe608;</span>
+          <span class="text">地址管理</span>
+          <span class="arrow"></span>
+        </router-link>
+        <div class="app-bar">
+          <span class="iconfont">&#xe613;</span>
+          <span class="text">全部订单</span>
+          <span class="arrow"></span>
+        </div>
+        <div class="app-bar">
+          <span class="iconfont">&#xe613;</span>
+          <span class="text">全部订单</span>
+          <span class="arrow"></span>
+        </div>
       </div>
     </div>
 
     <fixed-footer>
-      <div class="tabs">
-        <a class="tab">
-          <span class="iconfont">&#xe619;</span>
-          <div>首页</div>
-        </a>
-        <a class="tab">
-          <span class="iconfont">&#xe620;</span>
-          <div>我的</div>
-        </a>
-      </div>
+      <tabs :data="footerTabs" @tab="switchDisplay"></tabs>
     </fixed-footer>
-
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import FixedFooter from './commons/FixedFooter'
+import Searcher from './commons/Searcher'
+import Tabs from './commons/Tabs'
 
 export default {
   name: 'home',
   data () {
     return this.$store.state.home
+  },
+  computed: {
+    homeTabs () {
+      return [
+        {icon: '&#xe612;', text: '品牌'},
+        {icon: '&#xe60b;', text: '分类'},
+        {icon: '&#xe60a;', text: '发现'}
+      ]
+    },
+    footerTabs () {
+      return [
+        {icon: '&#xe619;', text: '首页', name: 'home'},
+        {icon: '&#xe620;', text: '我的', name: 'user'}
+      ]
+    },
+    userCenterTabs () {
+      return [
+        {icon: '&#xe607;', text: '待支付'},
+        {icon: '&#xe606;', text: '待收货'},
+        {icon: '&#xe626;', text: '已完成'}
+      ]
+    }
   },
   created () {
     this.fetchHomeProducts()
@@ -71,72 +106,18 @@ export default {
     gotoDetail (id) {
       this.$router.push('detail')
     },
+    ...mapMutations(['switchDisplay']),
     ...mapActions(['fetchHomeProducts'])
   },
   components: {
-    FixedFooter
+    FixedFooter,
+    Searcher,
+    Tabs
   }
 }
 </script>
 
 <style>
-  .searcher {
-    padding-top: 0.5rem;
-  }
-  .searcher-input {
-    color: #999999;
-    font-size: .9375rem;
-    line-height: 2rem;
-    width: 93%;
-    margin: 0 auto;
-    border-radius: 0.4rem;
-    border: none;
-    background-color: white;
-    padding: 0 .5rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-  }
-  .searcher-input input {
-    padding-left: .5rem;
-    line-height: 34px;
-    width: 100%;
-    flex: 1 220px;
-    margin: 0;
-    padding-right: 24px;
-    background-color: transparent;
-  }
-
-  .tabs {
-    display: flex;
-    height: 5.3125rem;
-    margin-top: .8rem;
-    width: 100%;
-  }
-  .tab {
-    flex: 1;
-    color: white;
-    background-color: #76b68c;
-    display: block;
-    padding: 5px;
-    padding-top: 1.5rem;
-    width: 100%;
-    text-align: center;
-  }
-  .tab span {
-    font-size: 2.3rem;
-    display: block;
-  }
-  .tab div {
-    margin-top: .9rem;
-    margin-bottom: 0.3rem;
-    font-size: .9375rem;
-  }
-
-
   .product-list {
   }
   .product-wrapper {
@@ -189,5 +170,69 @@ export default {
   footer .tab div {
     margin: 0;
     font-size: 0.6875rem;
+  }
+
+
+  .userCenter-header {
+    width: 100%;
+    background-color: #98d1ad;
+    height: 8rem;
+    position: relative;
+  }
+  .userCenter-phone {
+    position: absolute;
+    color: white;
+    border: 1px solid white;
+    padding: .1rem 0.4rem;
+    border-radius: 0.4rem;
+    right: .5rem;
+    top: 1rem;
+  }
+  .userCenter-avatar-wrapper {
+    text-align: center;
+    padding-top: 1.5rem;
+    color: white;
+  }
+  .userCenter-avatar {
+    width: 4rem;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: .5rem;
+    border-radius: 100%;
+  }
+
+  .userCenter-tabs .tabs {
+    margin-top: 0
+  }
+  .userCenter-tabs .tab {
+    color: #4a4a4a;
+    background-color: white;
+  }
+  .userCenter-tabs .iconfont {
+    color: #98d1ad;
+  }
+
+  .app-bars {
+    background-color: white;
+    padding: 0 .5rem;
+    margin-top: 1rem;
+    color: #4a4a4a;
+    font-size: 0.9375rem;
+  }
+  .app-bar {
+    display: flex;
+    border-bottom: 1px solid #e8e8e8;
+    height: 3.125rem;
+    line-height: 3.125rem;
+    color: #4a4a4a;
+  }
+  .app-bar .iconfont {
+    margin-right: .5rem;
+  }
+  .app-bar .text {
+    flex: 1
+  }
+  .app-bar .arrow {
+
   }
 </style>

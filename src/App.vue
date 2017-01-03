@@ -20,6 +20,7 @@ export default {
       let isBackward = this.last && this.last === to.path
       this.transitionName = isBackward ? 'slide-left' : 'slide-right'
       this.last = isBackward ? '' : from.path
+      // @TODO deal with login
     }
   }
 }
@@ -34,6 +35,7 @@ export default {
 .view {
   background-color: #F1F1F1;
   width: 100%;
+  height: 100%;
 }
 .view:last-child, .view.slide-left-leave-active{
   position: absolute;

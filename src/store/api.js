@@ -96,3 +96,7 @@ export function fetchHomeProducts (params, callback) {
 export function fetchProductDetail (params, callback) {
   request('detail', params, callback)
 }
+
+export function userLogin (params, callback) {
+  request('login', params, callback)
+}

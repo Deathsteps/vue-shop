@@ -5,7 +5,9 @@ export default {
   state: {
     fetching: false,
     products: null,
-    err: null
+    err: null,
+
+    display: 'home'
   },
   actions: {
     fetchHomeProducts ({ commit, state }) {
@@ -26,5 +28,10 @@ export default {
       })
     }
   },
-  mutations: buildMutations4Action('HOME_PRODUCT')
+  mutations: {
+    switchDisplay (state, playload) {
+      state.display = playload.name
+    },
+    ...buildMutations4Action('HOME_PRODUCT')
+  }
 }
