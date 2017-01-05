@@ -16,7 +16,7 @@
   					<input type="checkbox"/>
   				</label>
   				<div class="address-default">设为默认</div>
-  				<div class="address-btn">
+  				<div @click="openDeleteConfirm(address.id)" class="address-btn">
   					<span class="iconfont">&#xe614;</span>
   					<span>删除</span>
   				</div>
@@ -59,6 +59,15 @@
         添加新地址
       </router-link>
     </fixed-footer>
+
+    <popup
+      v-if="deleteConfrimDisplayed"
+      title="消息"
+      content="确定要删除吗？"
+      :btnCancelDisplayed="true"
+      :btnConfirmDisplayed="true"
+      @cancel="closeDeleteConfirm"
+      @confirm="removeAddress(removeAddressId)"/>
   </div>
 </template>
 
@@ -66,6 +75,7 @@
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import FixedFooter from './commons/FixedFooter'
 import Loading from './commons/Loading'
+import Popup from './commons/Popup'
 import AddressEditor from './address/AddressEditor'
 
 export default {
@@ -73,6 +83,7 @@ export default {
   components: {
     FixedFooter,
     Loading,
+    Popup,
     AddressEditor
   },
   data () {
@@ -97,6 +108,14 @@ export default {
         this.$router.back()
         this.addSuccess = false
       }
+    },
+    deleteSuccess (deleteSuccess) {
+      if (deleteSuccess) {
+        this.fetchUserAddresses()
+        this.removeAddressId = -1
+        this.deleteSuccess = false
+        this.deleteConfrimDisplayed = false
+      }
     }
   },
   methods: {
@@ -115,13 +134,16 @@ export default {
     ...mapActions([
       'fetchUserAddresses',
       'addAddress',
-      'editAddress'
+      'editAddress',
+      'removeAddress'
     ]),
     ...mapMutations([
       'openLocationDialog',
       'selectLocation',
       'locationBack',
-      'setEditedAddress'
+      'setEditedAddress',
+      'openDeleteConfirm',
+      'closeDeleteConfirm'
     ])
   }
 }

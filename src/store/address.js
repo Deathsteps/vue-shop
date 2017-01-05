@@ -6,6 +6,9 @@ export default {
     // list
     fetching: false,
     addresses: [],
+    deleteConfrimDisplayed: false,
+    removeAddressId: -1,
+    deleteSuccess: false,
     // add
     adding: false,
     newAddress: {
@@ -99,6 +102,9 @@ export default {
           })
         }
       })
+    },
+    removeAddress ({ commit, state }, params) {
+      commit('USER_ADDRESS_DELETE_SUCCESS', { deleteSuccess: true })
     }
   },
   mutations: {
@@ -147,8 +153,16 @@ export default {
     setEditedAddress (state, address) {
       state.editedAddress = address
     },
+    openDeleteConfirm (state, removeAddressId) {
+      state.deleteConfrimDisplayed = true
+      state.removeAddressId = removeAddressId
+    },
+    closeDeleteConfirm (state) {
+      state.deleteConfrimDisplayed = false
+    },
     ...buildMutations4Action('USER_ADDRESS'),
     ...buildMutations4Action('USER_ADDRESS_ADD'),
-    ...buildMutations4Action('USER_ADDRESS_EDIT')
+    ...buildMutations4Action('USER_ADDRESS_EDIT'),
+    ...buildMutations4Action('USER_ADDRESS_DELETE')
   }
 }
