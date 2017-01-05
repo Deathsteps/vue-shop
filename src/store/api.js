@@ -38,7 +38,7 @@ const post = (url, params, callback) => {
   ajax(
     url, 'POST', params, callback,
     function (xhr) {
-      xhr.setRequestHeader('Content-type', 'application/json charset=utf-8')
+      xhr.setRequestHeader('Content-type', 'application/json')
     }
   )
 }
@@ -99,4 +99,18 @@ export function fetchProductDetail (params, callback) {
 
 export function userLogin (params, callback) {
   request('login', params, callback)
+}
+
+export function fetchUserAddresses (params, callback) {
+  request('address', params, callback)
+}
+
+export function addAddress (params, callback) {
+  params = { mode: 'add', ...params }
+  request('address', params, callback)
+}
+
+export function editAddress (params, callback) {
+  params = { mode: 'edit', ...params }
+  request('address', params, callback)
 }

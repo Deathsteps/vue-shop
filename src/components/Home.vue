@@ -42,7 +42,7 @@
           <span class="text">全部订单</span>
           <span class="arrow"></span>
         </div>
-        <router-link tag="div" to="address" class="app-bar">
+        <router-link tag="div" to="address/list" class="app-bar">
           <span class="iconfont">&#xe608;</span>
           <span class="text">地址管理</span>
           <span class="arrow"></span>

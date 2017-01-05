@@ -14,7 +14,7 @@
 			<input v-model.trim="password" class="login-input" placeholder="请输入密码" type="password" />
 		</div>
 	</div>
-	<div class="login-button" @click="login({username, password})">
+	<div class="big-button" @click="login({username, password})">
 		登录
 	</div>
 	<a class="login-forget">忘记密码</a>
@@ -70,18 +70,6 @@ input.login-input {
   height: 3rem;
   line-height: 3rem;
   width: 70%;
-}
-.login-button {
-  width: 90%;
-  margin: 0 auto;
-  margin-top: 1.5rem;
-  height: 2.1875rem;
-  line-height: 2rem;
-  border-radius: 0.4rem;
-  background: #76b68c;
-  border-color: #76b68c;
-  color: white;
-  text-align: center;
 }
 .login-forget {
   margin-top: 1rem;

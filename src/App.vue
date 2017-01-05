@@ -33,9 +33,9 @@ export default {
 }
 
 .view {
-  background-color: #F1F1F1;
   width: 100%;
   height: 100%;
+  background-color: #F1F1F1
 }
 .view:last-child, .view.slide-left-leave-active{
   position: absolute;

@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 
 var router = express.Router();
@@ -66,6 +68,36 @@ router.post('/login', function (req, res, next) {
     res.json({
       token: 'sds12-21s2d-w21as-i23jd'
     })
+  }, 500)
+})
+
+var userAddresses = []
+router.post('/address', function (req, res, next) {
+  setTimeout(() => {
+    if (req.body.mode === 'add') {
+      let newAddress = Object.assign(
+        {id: userAddresses.length},
+        req.body
+      );
+      delete newAddress.mode
+      userAddresses.push(newAddress)
+      res.json({})
+    }
+    else if (req.body.mode === 'edit') {
+      let editedOne = req.body;
+      delete editedOne.mode
+      for (var i = 0; i < userAddresses.length; i++) {
+        let address = userAddresses[i]
+        if (address.id === editedOne.id) {
+          userAddresses[i] = editedOne
+          res.json({})
+          break;
+        }
+      }
+    }
+    else {
+      res.json(userAddresses)
+    }
   }, 500)
 })
 

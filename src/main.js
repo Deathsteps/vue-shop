@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 
 import App from './App'
+import NotFound from './components/NotFound'
 import Home from './components/Home'
 import Detail from './components/Detail'
 import Address from './components/Address'
@@ -21,7 +22,8 @@ const routes = [
   { path: '/home', component: Home },
   { path: '/detail', component: Detail },
   { path: '/login', component: Login },
-  { path: '/address', component: Address, meta: { requiresAuth: true } }
+  { path: '/address/:mode', component: Address, meta: { requiresAuth: true } },
+  { path: '*', component: NotFound }
 ]
 const router = new VueRouter({ routes })
 

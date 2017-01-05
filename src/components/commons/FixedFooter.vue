@@ -14,11 +14,16 @@
 export default {
   name: 'fixed-footer',
   props: {
-    'back': Boolean
+    'back': Boolean,
+    'backFunction': Function
   },
   methods: {
     goBack () {
-      this.$router.back()
+      if (this.backFunction) {
+        this.backFunction()
+      } else {
+        this.$router.back()
+      }
     }
   }
 }
@@ -31,6 +36,7 @@ footer {
   height: 3rem;
 }
 .fixed-footer {
+  display: flex;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -43,6 +49,7 @@ footer {
 .footer-back {
   display: flex;
   width: 30%;
+  cursor: pointer;
 }
 .footer-back span {
   font-family: 'DIN Alternate';

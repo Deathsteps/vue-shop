@@ -3,6 +3,7 @@ var config = require('../config')
 if (!process.env.NODE_ENV) process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 var path = require('path')
 var express = require('express')
+var bodyParser = require('body-parser');
 var webpack = require('webpack')
 var opn = require('opn')
 var proxyMiddleware = require('http-proxy-middleware')
@@ -18,6 +19,8 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 // dev test data mock service
 app.use('/data', require('./devMockDataService.js'));
 

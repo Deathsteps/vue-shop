@@ -1,22 +1,128 @@
 <template>
   <div class="view">
-    <div class="address-info" ng-if="address.addList.length === 0">
-		 点击下方按钮添加新地址
-	  </div>
-    <div class="loading">
-      <svg viewBox="0 0 64 64"><g stroke-width="4" stroke-linecap="round"><line y1="17" y2="29" transform="translate(32,32) rotate(180)"><animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(210)"><animate attributeName="stroke-opacity" dur="750ms" values="0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(240)"><animate attributeName="stroke-opacity" dur="750ms" values=".1;0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(270)"><animate attributeName="stroke-opacity" dur="750ms" values=".15;.1;0;1;.85;.7;.65;.55;.45;.35;.25;.15" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(300)"><animate attributeName="stroke-opacity" dur="750ms" values=".25;.15;.1;0;1;.85;.7;.65;.55;.45;.35;.25" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(330)"><animate attributeName="stroke-opacity" dur="750ms" values=".35;.25;.15;.1;0;1;.85;.7;.65;.55;.45;.35" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(0)"><animate attributeName="stroke-opacity" dur="750ms" values=".45;.35;.25;.15;.1;0;1;.85;.7;.65;.55;.45" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(30)"><animate attributeName="stroke-opacity" dur="750ms" values=".55;.45;.35;.25;.15;.1;0;1;.85;.7;.65;.55" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(60)"><animate attributeName="stroke-opacity" dur="750ms" values=".65;.55;.45;.35;.25;.15;.1;0;1;.85;.7;.65" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(90)"><animate attributeName="stroke-opacity" dur="750ms" values=".7;.65;.55;.45;.35;.25;.15;.1;0;1;.85;.7" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(120)"><animate attributeName="stroke-opacity" dur="750ms" values=".85;.7;.65;.55;.45;.35;.25;.15;.1;0;1;.85" repeatCount="indefinite"></animate></line><line y1="17" y2="29" transform="translate(32,32) rotate(150)"><animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate></line></g></svg>
+
+    <div v-if="$route.params.mode === 'list'">
+      <div class="address-info" v-if="!addresses.length">
+       点击下方按钮添加新地址
+      </div>
+      <div class="address-wrapper" v-for="address in addresses">
+        <div class="address-content">
+  				<span>收货人: {{address.name}}</span>
+  				<span class="phone">{{address.phone}}</span>
+  				<div class="detail">{{address.province}}{{address.city}}{{address.area}}{{address.detail}}</div>
+  			</div>
+  			<div class="address-btns">
+  				<label class="checkbox">
+  					<input type="checkbox"/>
+  				</label>
+  				<div class="address-default">设为默认</div>
+  				<div class="address-btn">
+  					<span class="iconfont">&#xe614;</span>
+  					<span>删除</span>
+  				</div>
+  				<div @click="go2Edit(address)" class="address-btn">
+  					<span class="iconfont">&#xe601;</span>
+  					<span>编辑</span>
+  				</div>
+  			</div>
+      </div>
+      <loading v-if="fetching"/>
     </div>
-    <fixed-footer :back="true"></fixed-footer>
+
+    <address-editor
+      v-if="$route.params.mode !== 'list'"
+      :mode="$router.currentRoute.params.mode"
+      :address="$router.currentRoute.params.mode === 'add' ? newAddress : editedAddress"
+      :openLocationDialog="openLocationDialog"
+      :save="$router.currentRoute.params.mode === 'add' ? addAddress : editAddress"/>
+
+    <div class="location-dialog" v-if="dialogDisplayed">
+      <div class="location-info">{{locationInfo}}</div>
+      <div class="location-title">{{locationTitle}}</div>
+      <ul class="location-ul">
+        <li class="location-li"
+          v-for="item in locationList"
+          @click="selectLocation({'location': item, 'locationIndex': locationIndex})">
+          {{item}}
+        </li>
+      </ul>
+    </div>
+
+    <fixed-footer
+      :back="true"
+      :backFunction="backFunction">
+      <router-link
+        tag="div"
+        v-if="$route.params.mode === 'list'"
+        to="/address/add"
+        class="address-add">
+        添加新地址
+      </router-link>
+    </fixed-footer>
   </div>
 </template>
 
 <script>
+import { mapMutations, mapActions, mapGetters } from 'vuex'
 import FixedFooter from './commons/FixedFooter'
+import Loading from './commons/Loading'
+import AddressEditor from './address/AddressEditor'
 
 export default {
   name: 'address',
   components: {
-    FixedFooter
+    FixedFooter,
+    Loading,
+    AddressEditor
+  },
+  data () {
+    return this.$store.state.address
+  },
+  computed: mapGetters([
+    'locationTitle',
+    'locationInfo'
+  ]),
+  created () {
+    this.fetchUserAddresses()
+  },
+  watch: {
+    addSuccess (addSuccess) {
+      if (addSuccess) {
+        this.$router.back()
+        this.addSuccess = false
+      }
+    },
+    editSuccess (editSuccess) {
+      if (editSuccess) {
+        this.$router.back()
+        this.addSuccess = false
+      }
+    }
+  },
+  methods: {
+    backFunction () {
+      if (this.$router.currentRoute.params.mode === 'list' ||
+        !this.dialogDisplayed) {
+        this.$router.back()
+      } else {
+        this.locationBack()
+      }
+    },
+    go2Edit (address) {
+      this.setEditedAddress(address)
+      this.$router.push('/address/edit?id=' + address.id)
+    },
+    ...mapActions([
+      'fetchUserAddresses',
+      'addAddress',
+      'editAddress'
+    ]),
+    ...mapMutations([
+      'openLocationDialog',
+      'selectLocation',
+      'locationBack',
+      'setEditedAddress'
+    ])
   }
 }
 </script>
@@ -28,13 +134,112 @@ export default {
   font-size: 0.9375rem;
   color: #4a4a4a;
 }
-.loading {
-  stroke: #69717d;
+.address-add {
   text-align: center;
+  font-size: 1.125rem;
+  line-height: 3rem;
+  width: 40%;
+  cursor: pointer;
 }
-.loading svg {
-  margin-top: 20px;
-  width: 28px;
-  height: 28px;
+
+.address-wrapper {
+  margin-bottom: 1rem;
+}
+.address-content {
+  background-color: white;
+  color: #4a4a4a;
+  padding: .5rem;
+  font-size: 0.9375rem;
+}
+.address-content .phone {
+  margin-left: 1rem;
+}
+.address-content .detail {
+  margin-top: 0.6rem;
+  line-height: 1rem;
+  border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 0.7rem;
+}
+.address-content-active {
+  background-color: #98d1ad;
+  color: white;
+}
+.address-content-active .detail {
+  border-bottom: none;
+}
+.address-btns {
+  height: 3.125rem;
+  line-height: 2.5rem;
+  padding: 0 .5rem;
+  background-color: white;
+  display: flex;
+}
+.address-default {
+  flex: 1
+}
+.address-btn {
+  cursor: pointer;
+  margin-right: 1rem;
+}
+.address-btn span.iconfont {
+  font-size: 1rem
+}
+
+.address-inputs {
+  background-color: white;
+  padding: 0 .5rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+input.address-input {
+  width: 100%;
+  height: 3rem;
+  line-height: 3rem;
+  border-bottom: 1px solid #e8e8e8;
+  padding-left: .5rem;
+}
+.address-set {
+  height: 3rem;
+  line-height: 3rem;
+  padding: 0 .5rem;
+  border-bottom: 1px solid #e8e8e8;
+  color: #4a4a4a;
+  display: block;
+  text-decoration: none;
+}
+.address-detail {
+  width: 100%;
+  height: 7.8125rem;
+  resize: none;
+  padding: .5rem;
+}
+
+.location-dialog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #F1F1F1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 3rem;
+}
+.location-info {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  color: #4a4a4a;
+}
+.location-title {
+  padding: .5rem 1rem;
+}
+.location-ul {
+  padding-left: 1rem;
+}
+.location-li {
+    border-bottom: 1px solid #e8e8e8;
+    width: 95%;
+    padding: .5rem 0;
 }
 </style>
