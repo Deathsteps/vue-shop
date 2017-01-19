@@ -114,3 +114,11 @@ export function editAddress (params, callback) {
   params = { mode: 'edit', ...params }
   request('address', params, callback)
 }
+
+export function fetchUserOrders (params, callback) {
+  request('orders', params, callback)
+}
+
+export function fetchOrderDetail (params, callback) {
+  request('order', params, callback)
+}

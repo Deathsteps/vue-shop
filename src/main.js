@@ -10,9 +10,17 @@ import Home from './components/Home'
 import Detail from './components/Detail'
 import Address from './components/Address'
 import Login from './components/Login'
+import OrderList from './components/OrderList'
+import OrderDetail from './components/OrderDetail'
 
 import storeModules from './store/index'
 import storage from './store/storage'
+
+import filters from './filters'
+
+Object.keys(filters).forEach(function (filterName) {
+  Vue.filter(filterName, filters[filterName])
+})
 
 Vue.use(Vuex)
 Vue.use(VueRouter)
@@ -23,6 +31,8 @@ const routes = [
   { path: '/detail', component: Detail },
   { path: '/login', component: Login },
   { path: '/address/:mode', component: Address, meta: { requiresAuth: true } },
+  { path: '/orders', component: OrderList, meta: { requiresAuth: true } },
+  { path: '/order', component: OrderDetail, meta: { requiresAuth: true } },
   { path: '*', component: NotFound }
 ]
 const router = new VueRouter({ routes })

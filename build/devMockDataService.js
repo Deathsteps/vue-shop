@@ -70,6 +70,126 @@ router.post('/login', function (req, res, next) {
     })
   }, 500)
 })
+router.post('/orders', function (req, res, next) {
+  setTimeout(() => {
+    res.json([{
+        products: [
+          {title: "Kdsdf", price: 211, buyCount: 2, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'},
+          {title: "See Kuo", price: 999, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'},
+          {title: "Ops Ass", price: 310, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/11/20161118100820_582e6294c02d8.jpg'}
+        ],
+        createTime: '1459537345000',
+        orderStatus: 1,
+        totalPrice: 3095,
+        orderId: 123131231123
+      },{
+        products: [
+          {title: "See Kuo", price: 99, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/05/947_G_1463121881855.jpg'},
+          {title: "Ops Ass", price: 310, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'}
+        ],
+        createTime: '1459537545000',
+        orderStatus: 2,
+        totalPrice: 2095,
+        orderId: 4564563131223
+      },{
+        products: [
+          {title: "See Kuo", price: 99, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'},
+          {title: "Ops Ass", price: 310, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'}
+        ],
+        createTime: '1459537545000',
+        orderStatus: 3,
+        totalPrice: 2095,
+        orderId: 778883123123
+      },{
+        products: [
+          {title: "See Kuo", price: 99, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/11/20161118100820_582e6294c02d8.jpg'},
+          {title: "Ops Ass", price: 310, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/05/947_G_1463121881855.jpg'}
+        ],
+        createTime: '1459537545000',
+        orderStatus: 3,
+        totalPrice: 2095,
+        orderId: 178683123123
+      },{
+        products: [
+          {title: "Ops Ass", price: 31, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'}
+        ],
+        createTime: '1459538445000',
+        orderStatus: 4,
+        totalPrice: 31,
+        orderId: 278683123123
+      },{
+        products: [
+          {title: "Ops Ass", price: 30, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg' }
+        ],
+        createTime: '1459517445000',
+        orderStatus: 4,
+        totalPrice: 30,
+        orderId: 18683123445
+      },{
+        products: [
+          {title: "Kdsdf", price: 211, buyCount: 2, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg' },
+          {title: "See Kuo", price: 999, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/11/20161118100820_582e6294c02d8.jpg' },
+          {title: "Ops Ass", price: 310, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/05/947_G_1463121881855.jpg' }
+        ],
+        createTime: '1459537345000',
+        orderStatus: 6,
+        totalPrice: 3095,
+        orderId: 17868312387
+      },{
+        products: [
+          {title: "Ops Ass", price: 31, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg' }
+        ],
+        createTime: '1459538445000',
+        orderStatus: 5,
+        totalPrice: 31,
+        orderId: 17868883123
+      },{
+        products: [
+          {title: "Ops Ass", price: 31, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/05/947_G_1463121881855.jpg' }
+        ],
+        createTime: '1459538445000',
+        orderStatus: 6,
+        totalPrice: 31,
+        orderId: 178600023123
+      },{
+        products: [
+          {title: "Ops Ass", price: 31, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg' }
+        ],
+        createTime: '1459538445000',
+        orderStatus: 7,
+        totalPrice: 31,
+        orderId: 178683123123
+      }
+    ])
+  }, 500)
+})
+router.post('/order', function (req, res, next) {
+  setTimeout(() => {
+    res.json({
+      createTime: 1459537345000,
+      totalPrice: 300,
+      price: 250,
+      postage: 30,
+      tariff: 20,
+      orderId: 12123123123,
+      comment: '周末送来',
+      address: {
+        name: 'Test',
+        phone: '17011824512',
+        province: '北京市',
+        city: '北京市',
+        area: '海滨区',
+        detail: '天和路32号'
+      },
+      expressId: 7071212982012,
+      products: [
+        {title: "Kdsdf", price: 211, buyCount: 2, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'},
+        {title: "See Kuo", price: 999, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'},
+        {title: "Ops Ass", price: 310, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/11/20161118100820_582e6294c02d8.jpg'}
+      ]
+    })
+  }, 500)
+})
 
 var userAddresses = []
 router.post('/address', function (req, res, next) {

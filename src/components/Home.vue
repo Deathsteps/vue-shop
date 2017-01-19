@@ -211,28 +211,4 @@ export default {
   .userCenter-tabs .iconfont {
     color: #98d1ad;
   }
-
-  .app-bars {
-    background-color: white;
-    padding: 0 .5rem;
-    margin-top: 1rem;
-    color: #4a4a4a;
-    font-size: 0.9375rem;
-  }
-  .app-bar {
-    display: flex;
-    border-bottom: 1px solid #e8e8e8;
-    height: 3.125rem;
-    line-height: 3.125rem;
-    color: #4a4a4a;
-  }
-  .app-bar .iconfont {
-    margin-right: .5rem;
-  }
-  .app-bar .text {
-    flex: 1
-  }
-  .app-bar .arrow {
-
-  }
 </style>
