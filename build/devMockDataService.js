@@ -168,6 +168,7 @@ router.post('/order', function (req, res, next) {
     res.json({
       createTime: 1459537345000,
       totalPrice: 300,
+      orderStatus: 1,
       price: 250,
       postage: 30,
       tariff: 20,

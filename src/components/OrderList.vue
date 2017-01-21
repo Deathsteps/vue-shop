@@ -11,56 +11,13 @@
   		暂无订单
   	</div>
 
-  	<div class="order-list">
-  		<div v-for="item in orderList">
-  			<div class="order-header">
-  				<div class="order-status">{{item.orderStatus | orderStatusText}}</div>
-  				<div class="order-tn">
-  					<div>订单号:{{item.orderId}}</div>
-  					<div>{{item.createTime | date}}</div>
-  				</div>
-  			</div>
-  			<div class="order-product">
-  				<div class="order-items">
-            <div class="order-item-img">
-              <img :src="item.products[0].picUrl"/>
-            </div>
-  					<div class="order-text">
-  						<div class="order-title">{{item.products[0].title}}</div>
-  						<div class="order-buy">
-  							<div class="order-price">¥{{item.products[0].price}}</div>
-  							<div>{{item.products[0].buyCount}} 件</div>
-  						</div>
-  					</div>
-  				</div>
-  				<!-- <div class="animated fadeInDown">
-  					<div class="order-items order-items-1 clearfix" >
-  						<img class="app-col-30" >
-  						<div class="app-col-70 order-text">
-  							<div class="order-title">{{product.title}}</div>
-  							<div class="clearfix">
-  								<div class="app-din pull-left">¥{{product.price | number:2}}</div>
-  								<div class="pull-right">{{product.buyCount}} 件</div>
-  							</div>
-  						</div>
-  					</div>
-  				</div>
-  				<div class="order-toggle shopcart-bar-line" >
-  					显示剩余 {{item.products.length}} 件 <span class="icon ion-chevron-down"></span>
-  				</div> -->
-  				<div class="order-footer" >
-  					<div class="order-total">总计： <span class="order-price order-total-price">¥{{item.totalPrice}}</span></div>
-  					<div class="order-btn" v-if="item.orderStatus === 4">确认收货</div>
-            <div class="order-btn order-pay" v-if="item.orderStatus === 1">付款</div>
-  				</div>
-  			</div>
-  		</div>
-  	</div>
+    <orders :data="orderList" v-if="orderList && orderList.length"/>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import Orders from './order/Orders'
 
 export default {
   name: 'order-list',
@@ -72,6 +29,9 @@ export default {
   },
   methods: {
     ...mapActions(['fetchUserOrders'])
+  },
+  components: {
+    Orders
   }
 }
 </script>
@@ -102,96 +62,4 @@ export default {
   font-size: 0.9375rem;
 }
 
-.order-list {
-  /*height: 100%;
-  overflow-y: scroll;*/
-}
-.order-header {
-  height: 3.125rem;
-  font-size: 0.9375rem;
-  background-color: #f0f9f4;
-  color: #76b68c;
-  padding: 0 .5rem;
-  display: flex;
-}
-.order-status {
-  line-height: 3.125rem;
-}
-.order-status:last-child {
-  text-align: right;
-  flex: 1;
-}
-.order-tn {
-  padding-top: 0.3rem;
-  text-align: right;
-  flex: 1;
-}
-.order-product {
-  background-color: white;
-  padding-left: .5rem;
-  padding-right: .5rem;
-  margin-bottom: 1rem;
-}
-.order-btn {
-  width: 4.125rem;
-  height: 1.875rem;
-  line-height: 1.875rem;
-  border-radius: 0.4rem;
-  margin-top: 0.6rem;
-  background: #76b68c;
-  border-color: #76b68c;
-  text-align: center;
-  color: white;
-}
-.order-footer {
-  height: 3.125rem;
-  line-height: 3.125rem;
-  display: flex;
-}
-.order-pay {
-  background-color: #f9732d;
-  border-color: #f9732d;
-}
-.order-items {
-  display: flex;
-  border-bottom: 1px solid #e8e8e8;
-  color: #4a4a4a;
-  height: 8.1875rem;
-}
-.order-items .order-item-img {
-  max-height: 7rem;
-  width: 30%;
-}
-.order-item-img img {
-  height: 100%;
-  text-align: center;
-}
-.order-text {
-  padding-left: 1.5625rem;
-  flex: 1;
-}
-.order-title {
-  min-height: 2.6rem;
-  max-height: 2.6rem;
-  margin-top: 1rem;
-  margin-bottom: .5rem;
-  overflow-y: hidden;
-}
-.order-buy {
-  display: flex;
-}
-.order-buy>div {
-  flex: 1;
-  text-align: right;
-}
-div.order-price {
-  font-family: 'DIN Alternate';
-  text-align: left;
-}
-.order-total {
-  flex: 1;
-}
-.order-total-price {
-  color: #fd8e56;
-}
 </style>

@@ -13,32 +13,7 @@
 			<div class="order-address">{{order.address.province}}{{order.address.city}}{{order.address.area}}{{order.address.detail}}</div>
 		</div>
 
-    <div class="order-list" v-if="order.products">
-  		<div>
-  			<div class="order-header">
-  				<div class="order-status">
-            <a>查看物流&gt;&gt;</a>
-          </div>
-  				<div class="order-status">
-  					<div>快递号:{{order.expressId}}</div>
-  				</div>
-  			</div>
-  			<div class="order-product">
-  				<div class="order-items">
-            <div class="order-item-img">
-              <img :src="order.products[0].picUrl"/>
-            </div>
-  					<div class="order-text">
-  						<div class="order-title">{{order.products[0].title}}</div>
-  						<div class="order-buy">
-  							<div class="order-price">¥{{order.products[0].price}}</div>
-  							<div>{{order.products[0].buyCount}} 件</div>
-  						</div>
-  					</div>
-  				</div>
-  			</div>
-  		</div>
-  	</div>
+    <orders :data="orders" mode="detail" v-if="orders"/>
 
 		<div class="order-comment">
 			<span>备注</span>
@@ -64,17 +39,26 @@
 
 <script>
 import { mapActions } from 'vuex'
+import Orders from './order/Orders'
 
 export default {
   name: 'order-detail',
   data () {
     return this.$store.state.orderDetail
   },
+  computed: {
+    orders () {
+      return this.order.products ? [this.order] : undefined
+    }
+  },
   created () {
     this.fetchOrderDetail()
   },
   methods: {
     ...mapActions(['fetchOrderDetail'])
+  },
+  components: {
+    Orders
   }
 }
 </script>
@@ -127,7 +111,6 @@ export default {
   width: 30%;
 }
 span.order-comment-text {
-  padding-right: 0.5rem;
   width: 70%;
   text-align: right;
   text-overflow: ellipsis;
