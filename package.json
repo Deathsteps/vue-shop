@@ -1,7 +1,7 @@
 {
-  "name": "aomai-front",
+  "name": "vue-shop",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "A h5 e-shop built with vue",
   "author": "Deathsteps <lovely_dreamer@126.com>",
   "private": true,
   "scripts": {

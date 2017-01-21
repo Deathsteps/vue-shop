@@ -1,4 +1,4 @@
-# aomai-front
+# vue-shop
 
 > A Vue.js project
 
