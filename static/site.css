@@ -862,3 +862,10 @@ a.button {
   color: white;
   text-align: center;
 }
+
+.app-blank {
+  padding-top: 50%;
+  text-align: center;
+  color: #999999;
+  font-size: 0.9375rem;
+}

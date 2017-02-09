@@ -55,11 +55,4 @@ export default {
   border-bottom: 2px solid #76b68c;
 }
 
-.app-blank {
-  padding-top: 50%;
-  text-align: center;
-  color: #999999;
-  font-size: 0.9375rem;
-}
-
 </style>

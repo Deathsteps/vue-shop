@@ -122,3 +122,10 @@ export function fetchUserOrders (params, callback) {
 export function fetchOrderDetail (params, callback) {
   request('order', params, callback)
 }
+
+export function addProduct2Cart (params, callback) {
+  window.temp_cartCount = window.temp_cartCount || 0
+  setTimeout(() => {
+    callback(null, { buyCount: ++window.temp_cartCount })
+  }, 200)
+}

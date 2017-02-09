@@ -47,7 +47,14 @@
         :src="image.imageUrl" alt="" />
   	</div>
 
-    <fixed-footer :back="true"></fixed-footer>
+    <fixed-footer :back="true">
+      <div class="cart-add" @click="add2Cart">加入购物车</div>
+      <div class="detail-buy">立即购买</div>
+      <a class="detail-cart">
+        <span class="iconfont">&#xe60d;</span>
+        <span class="cart-count">{{buyCount}}</span>
+      </a>
+    </fixed-footer>
 	</div>
 </template>
 
@@ -77,7 +84,7 @@ export default {
     this.fetchProductDetail()
   },
   methods: {
-    ...mapActions(['fetchProductDetail'])
+    ...mapActions(['fetchProductDetail', 'add2Cart'])
   }
 }
 </script>
@@ -181,10 +188,7 @@ export default {
   color: #fd8e56;
 }
 .app-bars {
-  background-color: white;
-  padding: 0 .5rem;
-  color: #4a4a4a;
-  font-size: 0.9375rem;
+  margin-top: 0;
 }
 .detail-detail {
   height: 3.125rem;
@@ -207,5 +211,47 @@ export default {
 .detail-detail-imgs {}
 .detail-img {
   width: 100%;
+}
+
+.detail-cart {
+  width: 3.25rem;
+  height: 3.25rem;
+  text-align: center;
+  line-height: 3.25rem;
+  border-radius: 3.25rem;
+  position: absolute;
+  bottom: 4rem;
+  left: 1rem;
+  background-color: #76b68c;
+  color: white;
+  opacity: 0.7;
+  display: block;
+}
+.cart-count {
+  width: 1.3rem;
+  height: 1.3rem;
+  position: absolute;
+  bottom: 1.9rem;
+  left: 2.2rem;
+  text-align: center;
+  line-height: 1.3rem;
+  background-color: red;
+  color: white;
+  border-radius: 1.3rem;
+  font-size: 0.875rem;
+}
+
+.cart-add, .detail-buy {
+  text-align: center;
+  font-size: 1.125rem;
+  line-height: 3rem;
+}
+.cart-add {
+  width: 40%;
+  background-color: rgb(118, 182, 140);
+}
+.detail-buy {
+  width: 30%;
+  background-color: #F9722E;
 }
 </style>
