@@ -1,22 +1,28 @@
 <template lang="html">
 
   <div class="view">
-    <div class="app-blank">
+    <loading v-if="fetching"/>
+
+    <div class="app-blank" v-if="shopcart && !shopcart.length">
       暂无商品
     </div>
 
-    <div class="shopcart-item" v-for="shop in shopcart">
+    <div class="shopcart-item" v-if="shopcart" v-for="(shop, shopIndex) in shopcart">
       <div class="shopcart-header">
-        <label class="checkbox">
-          <input type="checkbox"/>
-        </label>
+        <checkbox
+          :checked="shop.checked"
+          :value="{shopIndex}"
+          @change="checkShopProducts4Cart"
+        />
         <span class="shopcart-shop">{{shop.shopname}}</span>
       </div>
 
-      <div class="shopcart-product" v-for="product in shop.products">
-        <label class="checkbox">
-          <input type="checkbox"/>
-        </label>
+      <div class="shopcart-product" v-for="(product, productIndex) in shop.products">
+        <checkbox
+          :checked="product.checked"
+          :value="{shopIndex, productIndex}"
+          @change="checkProduct4Cart"
+        />
         <div class="shopcart-img">
           <img :src="product.picUrl"/>
         </div>
@@ -53,30 +59,25 @@
 </template>
 
 <script>
+import { mapMutations, mapActions } from 'vuex'
+import Checkbox from './commons/Checkbox'
+import Loading from './commons/Loading'
+
 export default {
   name: 'shopcart',
   data () {
-    return {
-      shopcart: [
-        {
-          shopname: 'kaka',
-          selectCount: 1,
-          price: 499,
-          products: [
-            {title: 'See Kuo', price: 999, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'}
-          ]
-        },
-        {
-          shopname: 'aka',
-          selectCount: 2,
-          price: 799,
-          products: [
-            {title: 'Kdsdf', price: 211, buyCount: 2, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'},
-            {title: 'Ops Ass', price: 310, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/11/20161118100820_582e6294c02d8.jpg'}
-          ]
-        }
-      ]
-    }
+    return this.$store.state.shopcart
+  },
+  methods: {
+    ...mapActions(['fetchUserShopcart']),
+    ...mapMutations(['checkShopProducts4Cart', 'checkProduct4Cart'])
+  },
+  created () {
+    this.fetchUserShopcart()
+  },
+  components: {
+    Checkbox,
+    Loading
   }
 }
 </script>

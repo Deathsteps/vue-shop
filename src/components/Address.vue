@@ -12,9 +12,7 @@
   				<div class="detail">{{address.province}}{{address.city}}{{address.area}}{{address.detail}}</div>
   			</div>
   			<div class="address-btns">
-  				<label class="checkbox">
-  					<input type="checkbox"/>
-  				</label>
+  				<checkbox :checked="true" />
   				<div class="address-default">设为默认</div>
   				<div @click="openDeleteConfirm(address.id)" class="address-btn">
   					<span class="iconfont">&#xe614;</span>
@@ -76,6 +74,7 @@ import { mapMutations, mapActions, mapGetters } from 'vuex'
 import FixedFooter from './commons/FixedFooter'
 import Loading from './commons/Loading'
 import Popup from './commons/Popup'
+import Checkbox from './commons/Checkbox'
 import AddressEditor from './address/AddressEditor'
 
 export default {
@@ -84,6 +83,7 @@ export default {
     FixedFooter,
     Loading,
     Popup,
+    Checkbox,
     AddressEditor
   },
   data () {

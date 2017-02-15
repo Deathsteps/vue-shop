@@ -129,3 +129,7 @@ export function addProduct2Cart (params, callback) {
     callback(null, { buyCount: ++window.temp_cartCount })
   }, 200)
 }
+
+export function fetchUserShopcart (params, callback) {
+  request('shopcart', params, callback)
+}
