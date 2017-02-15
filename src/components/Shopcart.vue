@@ -31,9 +31,9 @@
           <div class="shopcart-price">¥{{product.price}}</div>
           <div class="shopcart-btn">
             <div class="number-changer">
-              <div class="iconfont">&#xe62d;</div>
+              <div class="iconfont" @click="decreaseProductAmount({ shopIndex, productIndex })">&#xe62d;</div>
               <div class="number-changer-count">{{product.buyCount}}</div>
-              <div class="iconfont">&#xe62c;</div>
+              <div class="iconfont" @click="increaseProductAmount({ shopIndex, productIndex })">&#xe62c;</div>
             </div>
             <span class="iconfont shopcart-delete">&#xe614;</span>
           </div>
@@ -70,7 +70,12 @@ export default {
   },
   methods: {
     ...mapActions(['fetchUserShopcart']),
-    ...mapMutations(['checkShopProducts4Cart', 'checkProduct4Cart'])
+    ...mapMutations([
+      'checkShopProducts4Cart',
+      'checkProduct4Cart',
+      'decreaseProductAmount',
+      'increaseProductAmount'
+    ])
   },
   created () {
     this.fetchUserShopcart()

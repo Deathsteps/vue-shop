@@ -196,7 +196,7 @@ router.post('/shopcart', function (req, res, next) {
     res.json([
       {
         shopname: 'kaka',
-        selectCount: 1,
+        selectCount: 0,
         price: 499,
         products: [
           {title: 'See Kuo', price: 999, buyCount: 1, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'}
@@ -204,7 +204,7 @@ router.post('/shopcart', function (req, res, next) {
       },
       {
         shopname: 'aka',
-        selectCount: 2,
+        selectCount: 0,
         price: 799,
         products: [
           {title: 'Kdsdf', price: 211, buyCount: 2, picUrl: 'http://www.aomaicdn.com/attas/2016/10/20161008173242_57f8bd3ad325a.jpg'},
@@ -214,7 +214,6 @@ router.post('/shopcart', function (req, res, next) {
     ])
   }, 500)
 })
-
 
 var userAddresses = []
 router.post('/address', function (req, res, next) {

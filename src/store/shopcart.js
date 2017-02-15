@@ -42,6 +42,9 @@ export default {
       shop.checked = shop.products.every((p) => {
         return p.checked
       })
+      shop.selectCount = shop.products.reduce((acc, cur) => {
+        return acc + (cur.checked ? 1 : 0)
+      }, 0)
     },
     checkShopProducts4Cart (state, { checked, shopIndex }) {
       let shop = state.shopcart[shopIndex]
@@ -49,6 +52,23 @@ export default {
       shop.products.forEach((p) => {
         p.checked = shop.checked
       })
+      shop.selectCount = shop.checked ? shop.products.length : 0
+    },
+    decreaseProductAmount (state, { shopIndex, productIndex }) {
+      let shop = state.shopcart[shopIndex]
+      let product = shop.products[productIndex]
+      if (product.buyCount === 1) { // 1 is an assumed min-amount of product purchase quantity
+        return
+      }
+      product.buyCount --
+    },
+    increaseProductAmount (state, { shopIndex, productIndex }) {
+      let shop = state.shopcart[shopIndex]
+      let product = shop.products[productIndex]
+      if (product.buyCount >= 99) { // 99 is an assumed max-amount of product purchase quantity
+        return
+      }
+      product.buyCount ++
     },
     ...buildMutations4Action('SHOPCART')
   }
