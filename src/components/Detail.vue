@@ -50,10 +50,10 @@
     <fixed-footer :back="true">
       <div class="cart-add" @click="add2Cart">加入购物车</div>
       <div class="detail-buy">立即购买</div>
-      <a class="detail-cart">
+      <router-link to="shopcart" class="detail-cart">
         <span class="iconfont">&#xe60d;</span>
         <span class="cart-count">{{buyCount}}</span>
-      </a>
+      </router-link>
     </fixed-footer>
 	</div>
 </template>

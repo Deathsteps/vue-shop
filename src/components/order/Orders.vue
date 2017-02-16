@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="order-list">
-    <div v-for="item in data">
+    <div v-for="(item, itemIndex) in data">
       <div class="order-header">
         <div class="order-status">{{item.orderStatus | orderStatusText}}</div>
 
@@ -31,7 +31,7 @@
           <div
             class="order-items"
             v-for="(product, i) in item.products"
-            v-if="i !== 0 && isMoreDisplayed"
+            v-if="i !== 0 && moreStatus[itemIndex].displayed"
             :key="i">
             <div class="order-item-img">
               <img :src="product.picUrl"/>
@@ -45,8 +45,8 @@
             </div>
           </div>
         </transition-group>
-        <div class="order-toggle" @click="showMore">
-          {{moreText}}剩余 {{item.products.length}} 件 <span class="icon ion-chevron-down"></span>
+        <div class="order-toggle" @click="showMore(itemIndex)">
+          {{ moreStatus[itemIndex].text }}剩余 {{item.products.length}} 件 <span class="icon ion-chevron-down"></span>
         </div>
         <div class="order-footer" >
           <div class="order-total">总计： <span class="order-price order-total-price">¥{{item.totalPrice}}</span></div>
@@ -67,17 +67,15 @@ export default {
   },
   data () {
     return {
-      isMoreDisplayed: false
-    }
-  },
-  computed: {
-    moreText () {
-      return this.isMoreDisplayed ? '隐藏' : '显示'
+      moreStatus: this.data.map(() => {
+        return { displayed: false, text: '显示' }
+      })
     }
   },
   methods: {
-    showMore () {
-      this.isMoreDisplayed = !this.isMoreDisplayed
+    showMore (itemIndex) {
+      this.moreStatus[itemIndex].displayed = !this.moreStatus[itemIndex].displayed
+      this.moreStatus[itemIndex].text = this.moreStatus[itemIndex].displayed ? '隐藏' : '显示'
     }
   }
 }

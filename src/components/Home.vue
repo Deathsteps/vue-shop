@@ -37,26 +37,21 @@
       </div>
 
       <div class="app-bars">
-        <div class="app-bar">
+        <router-link tag="div" to="orders" class="app-bar">
           <span class="iconfont">&#xe613;</span>
           <span class="text">全部订单</span>
           <span class="arrow"></span>
-        </div>
+        </router-link>
         <router-link tag="div" to="address/list" class="app-bar">
           <span class="iconfont">&#xe608;</span>
           <span class="text">地址管理</span>
           <span class="arrow"></span>
         </router-link>
-        <div class="app-bar">
-          <span class="iconfont">&#xe613;</span>
-          <span class="text">全部订单</span>
+        <router-link tag="div" to="shopcart" class="app-bar">
+          <span class="iconfont">&#xe622;</span>
+          <span class="text">购物车</span>
           <span class="arrow"></span>
-        </div>
-        <div class="app-bar">
-          <span class="iconfont">&#xe613;</span>
-          <span class="text">全部订单</span>
-          <span class="arrow"></span>
-        </div>
+        </router-link>
       </div>
     </div>
 
