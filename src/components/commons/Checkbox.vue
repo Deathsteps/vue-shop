@@ -3,7 +3,7 @@
     <input
       type="checkbox"
       :checked="checked ? 'checked' : ''"
-      @change="change"
+      @click="change"
     />
   </label>
 </template>
@@ -19,7 +19,7 @@ export default {
     change () {
       this.$emit(
         'change',
-        { checked: !this.checked, ...this.value }
+        { checked: !this.checked, ...(this.value || {}) }
       )
     }
   }
