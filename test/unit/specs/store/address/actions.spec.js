@@ -48,34 +48,36 @@ const buildCommit = (expectedMutations, done) => {
   }
 }
 
-describe('actions for the address store', () => {
-  it('fetchUserAddresses', done => {
-    const { fetchUserAddresses } = address.actions
-    let state = {}
-    let commit = buildCommit([
-      { type: 'USER_ADDRESS_REQUEST', playload: { fetching: true } },
-      { type: 'USER_ADDRESS_SUCCESS', playload: { fetching: false, addresses: testAddresses, err: null } }
-    ], done)
-    fetchUserAddresses({ commit, state })
-  })
+describe('address store', () => {
+  describe('actions', () => {
+    it('fetchUserAddresses', done => {
+      const { fetchUserAddresses } = address.actions
+      let state = {}
+      let commit = buildCommit([
+        { type: 'USER_ADDRESS_REQUEST', playload: { fetching: true } },
+        { type: 'USER_ADDRESS_SUCCESS', playload: { fetching: false, addresses: testAddresses, err: null } }
+      ], done)
+      fetchUserAddresses({ commit, state })
+    })
 
-  it('addAddress', done => {
-    const { addAddress } = address.actions
-    let state = {}
-    let commit = buildCommit([
-      { type: 'USER_ADDRESS_ADD_REQUEST', playload: { adding: true } },
-      { type: 'USER_ADDRESS_ADD_SUCCESS', playload: { adding: false, addSuccess: true, err: null } }
-    ], done)
-    addAddress({ commit, state })
-  })
+    it('addAddress', done => {
+      const { addAddress } = address.actions
+      let state = {}
+      let commit = buildCommit([
+        { type: 'USER_ADDRESS_ADD_REQUEST', playload: { adding: true } },
+        { type: 'USER_ADDRESS_ADD_SUCCESS', playload: { adding: false, addSuccess: true, err: null } }
+      ], done)
+      addAddress({ commit, state })
+    })
 
-  it('editAddress', done => {
-    const { editAddress } = address.actions
-    let state = {}
-    let commit = buildCommit([
-      { type: 'USER_ADDRESS_EDIT_REQUEST', playload: { editing: true } },
-      { type: 'USER_ADDRESS_EDIT_SUCCESS', playload: { editing: false, editSuccess: true, err: null } }
-    ], done)
-    editAddress({ commit, state })
+    it('editAddress', done => {
+      const { editAddress } = address.actions
+      let state = {}
+      let commit = buildCommit([
+        { type: 'USER_ADDRESS_EDIT_REQUEST', playload: { editing: true } },
+        { type: 'USER_ADDRESS_EDIT_SUCCESS', playload: { editing: false, editSuccess: true, err: null } }
+      ], done)
+      editAddress({ commit, state })
+    })
   })
 })
