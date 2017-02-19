@@ -34,7 +34,7 @@ export default {
     },
     editSuccess: false,
     // location dialog
-    dialogMode: '',
+    dialogMode: '', // add or edit
     dialogDisplayed: false,
     locationList: null,
     locationIndex: 0,
