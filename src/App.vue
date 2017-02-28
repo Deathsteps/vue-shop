@@ -7,6 +7,8 @@
 </template>
 
 <script>
+let historyStack = []
+
 export default {
   name: 'app',
   data () {
@@ -17,9 +19,10 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      let isBackward = this.last && this.last === to.path
+      let lastPage = historyStack.length ? historyStack[historyStack.length - 1] : ''
+      let isBackward = lastPage && lastPage === to.path
       this.transitionName = isBackward ? 'slide-left' : 'slide-right'
-      this.last = isBackward ? '' : from.path
+      isBackward ? historyStack.pop() : historyStack.push(from.path)
       // @TODO deal with login
     }
   }
