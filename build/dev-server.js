@@ -22,7 +22,7 @@ var app = express()
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 // dev test data mock service
-app.use('/data', require('./devMockDataService.js'));
+app.use('/data', require('./mockDataRouter.js'));
 
 var compiler = webpack(webpackConfig)
 
