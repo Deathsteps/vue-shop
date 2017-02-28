@@ -12,7 +12,7 @@ var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/client-entry.js'
   },
   output: {
     path: config.build.assetsRoot,
@@ -29,6 +29,7 @@ module.exports = {
       'components': path.resolve(__dirname, '../src/components'),
       'vue-router': path.join(__dirname, "../node_modules/vue-router"),
       'vuex': path.join(__dirname, "../node_modules/vuex"),
+      'actual-api': './actual-api-client.js',
     }
   },
   resolveLoader: {

@@ -1,3 +1,2 @@
-import * as api from 'actual-api'
-
-export default api
+// const api = require('actual-api')
+module.exports = require('actual-api')

@@ -1,10 +1,6 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 
-import App from './App'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
 import Detail from './components/Detail'
@@ -14,16 +10,8 @@ import OrderList from './components/OrderList'
 import OrderDetail from './components/OrderDetail'
 import Shopcart from './components/Shopcart'
 
-import storeModules from './store/index'
 import storage from './store/storage'
 
-import filters from './filters'
-
-Object.keys(filters).forEach(function (filterName) {
-  Vue.filter(filterName, filters[filterName])
-})
-
-Vue.use(Vuex)
 Vue.use(VueRouter)
 
 const routes = [
@@ -51,11 +39,4 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  template: '<App/>',
-  components: { App },
-  store: new Vuex.Store({ modules: storeModules }),
-  router
-})
+export default router
