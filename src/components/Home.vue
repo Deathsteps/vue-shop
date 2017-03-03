@@ -72,30 +72,16 @@ export default {
   data () {
     return this.$store.state.home
   },
-  computed: {
-    homeTabs () {
-      return [
-        {icon: '&#xe612;', text: '品牌'},
-        {icon: '&#xe60b;', text: '分类'},
-        {icon: '&#xe60a;', text: '发现'}
-      ]
-    },
-    footerTabs () {
-      return [
-        {icon: '&#xe619;', text: '首页', name: 'home'},
-        {icon: '&#xe620;', text: '我的', name: 'user'}
-      ]
-    },
-    userCenterTabs () {
-      return [
-        {icon: '&#xe607;', text: '待支付'},
-        {icon: '&#xe606;', text: '待收货'},
-        {icon: '&#xe626;', text: '已完成'}
-      ]
-    }
+  preFetch (store) {
+    // Because this method will be called before the component is created,
+    // we have to use a `store` parameter to accomplish the data fetching
+    return store.dispatch('fetchHomeProducts')
   },
-  created () {
-    this.fetchHomeProducts()
+  beforeMount () {
+    // TODO: check data existence in fetchHomeProducts
+    if (!this.products) {
+      this.fetchHomeProducts()
+    }
   },
   methods: {
     gotoDetail (id) {

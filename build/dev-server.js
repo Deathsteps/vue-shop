@@ -21,6 +21,7 @@ var app = express()
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 // dev test data mock service
 app.use('/data', require('./mockDataRouter.js'));
 
@@ -53,7 +54,7 @@ Object.keys(proxyTable).forEach(function (context) {
 })
 
 // handle fallback for HTML5 history API
-app.use(require('connect-history-api-fallback')())
+// app.use(require('connect-history-api-fallback')())
 
 // serve webpack bundle output
 app.use(devMiddleware)
@@ -65,6 +66,10 @@ app.use(hotMiddleware)
 // serve pure static assets
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
+
+// server render
+var setServerRender = require('./setServerRender')
+setServerRender(app)
 
 module.exports = app.listen(port, function (err) {
   if (err) {
